@@ -1,12 +1,10 @@
 import datetime
 
-from sqlalchemy import Table, Integer, String, Column, TIMESTAMP, Boolean, ForeignKey
-from sqlalchemy.orm import DeclarativeMeta, declarative_base
+from sqlalchemy import  Integer, String, Column, TIMESTAMP,  ForeignKey
 
 from src.database import Base
 from src.auth.models import User
 
-# from src.database import metadata
 
 class Record(Base):
     __tablename__ = "record"

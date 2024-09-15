@@ -3,33 +3,33 @@ import datetime
 from sqlalchemy import Table, Integer, String, Column, TIMESTAMP, Boolean, ForeignKey
 from sqlalchemy.orm import DeclarativeMeta, declarative_base
 
-from src.database import metadata
+from src.database import Base
+from src.auth.models import User
 
-Base: DeclarativeMeta = declarative_base()
+# from src.database import metadata
+
+class Record(Base):
+    __tablename__ = "record"
+
+    id = Column(Integer, primary_key=True)
+    auther = Column(Integer, ForeignKey("user.id"), nullable=False)
+    title = Column(String, nullable=False)
+    content = Column(String, nullable=False)
+    created_at = Column(TIMESTAMP, default=datetime.datetime.utcnow)
+    updated_at = Column(TIMESTAMP, default=datetime.datetime.utcnow)
 
 
-record = Table(
-    "record",
-    metadata,
-    Column("id", Integer, primary_key=True),
-    Column('auther', Integer, ForeignKey("user.id")),
-    Column('title', String, nullable=False),
-    Column('content', String, nullable=False),
-    Column('tags', Integer, ForeignKey("tags.id")),
-    Column('created_at', TIMESTAMP, default=datetime.datetime.utcnow),
-    Column('updated_at', TIMESTAMP, default=datetime.datetime.utcnow),
-)
-tags = Table(
-    "tags",
-    metadata,
-    Column("id", Integer, primary_key=True),
-    Column('tag_name', String, nullable=False),
-)
+class Tag(Base):
+    __tablename__ = "tags"
 
-tagsrecord = Table(
-    "tagsrecord",
-    metadata,
-    Column("id", Integer, primary_key=True),
-    Column('tag_id', Integer, ForeignKey("tags.id")),
-    Column('record_id', Integer, ForeignKey("record.id")),
-)
+    id = Column(Integer, primary_key=True)
+    tag_name = Column(String, nullable=False)
+
+
+class TagsRecord(Base):
+    __tablename__ = "tagsrecord"
+
+    id = Column(Integer, primary_key=True)
+    tag_id = Column(Integer, ForeignKey("tags.id"), nullable=False)
+    record_id = Column(Integer, ForeignKey("record.id"), nullable=False)
+

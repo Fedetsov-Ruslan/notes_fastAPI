@@ -14,5 +14,5 @@ class UserTg(Base):
     __tablename__ = "usertg"
 
     id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey("user.id"), nullable=False)
+    user_id = Column(Integer, ForeignKey("user.id", ondelete="CASCADE"), nullable=False)
     tg_id = Column(Integer, nullable=False)

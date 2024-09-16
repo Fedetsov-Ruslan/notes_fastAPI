@@ -2,7 +2,7 @@ from pydantic import BaseModel
 from datetime import datetime
 
 
-class RecordSchema(BaseModel):
+class RecordCreate(BaseModel):
     id: int
     auther: int
     title: str
